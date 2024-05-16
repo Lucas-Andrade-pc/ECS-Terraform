@@ -11,7 +11,7 @@ terraform {
     key     = "lb/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
-    # profile = "aws-lucas"
+    profile = "aws-lucas"
   }
 }
 
@@ -19,7 +19,7 @@ provider "aws" {
   # access_key = ""
   # secret_key = ""
   region = var.region
-  #profile = var.profile
+  profile = var.profile
   default_tags {
     tags = local.common_tags
   }
@@ -31,6 +31,6 @@ data "terraform_remote_state" "vpc" {
     bucket = "descomplicando-terraform-remote-state"
     key    = "aws-vpc/terraform.tfstate"
     region = "us-east-1"
-    #profile = "aws-lucas"
+    profile = "aws-lucas"
   }
 }

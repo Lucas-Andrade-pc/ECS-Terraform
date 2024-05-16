@@ -33,7 +33,7 @@ resource "aws_launch_template" "ecs_lt" {
     tags          = local.common_tags
 
   }
-  user_data = data.template_file.file_data.rendered
+  user_data = "${base64encode(data.template_file.file_data.rendered)}"
 }
 data "template_file" "file_data" {
   template = file("register-ec2.sh")
