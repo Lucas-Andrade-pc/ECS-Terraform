@@ -2,6 +2,7 @@ resource "aws_launch_template" "ecs_lt" {
   name          = "template-ec2"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.type-ec2
+  
 
   key_name               = "ecs"
   vpc_security_group_ids = ["${data.terraform_remote_state.vpc.outputs.id_security_ecs}","${data.terraform_remote_state.vpc.outputs.id_security_application}"]
@@ -32,5 +33,8 @@ resource "aws_launch_template" "ecs_lt" {
     tags          = local.common_tags
 
   }
-  user_data = base64encode("register-ec2.sh")
+  user_data = data.template_file.file_data.rendered
+}
+data "template_file" "file_data" {
+  template = file("register-ec2.sh")
 }
