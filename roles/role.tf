@@ -4,22 +4,21 @@ data "aws_iam_policy_document" "instance_assume_role_policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      identifiers = ["ec2.amazonaws.com", "ecs.amazonaws.com"]
     }
   }
 }
 
 resource "aws_iam_role" "role" {
   name               = "ecsRole"
-  path               = "/"
   assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy.json
 }
 resource "aws_iam_role_policy_attachment" "ecs_node_role_policy" {
-  role       = aws_iam_role.role.name
+  role       = aws_iam_role.role.id
   policy_arn = var.policy_arn
 }
 
 resource "aws_iam_instance_profile" "ecs_node" {
   name_prefix = "demo-ecs-profile"
-  role        = aws_iam_role.role.name
+  role        = aws_iam_role.role.id
 }

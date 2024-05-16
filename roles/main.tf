@@ -11,14 +11,14 @@ terraform {
     key     = "role/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
-    #profile = "aws-lucas"
+    profile = "aws-lucas"
   }
 }
 
 provider "aws" {
   # access_key = ""
   # secret_key = ""
-  region  = var.region
+  region = var.region
   #profile = var.profile
   default_tags {
     tags = local.common_tags

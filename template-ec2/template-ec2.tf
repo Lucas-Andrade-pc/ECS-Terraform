@@ -20,7 +20,7 @@ resource "aws_launch_template" "ecs_lt" {
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
-      volume_size = 10
+      volume_size = 30
       volume_type = "gp3"
     }
   }
@@ -32,5 +32,5 @@ resource "aws_launch_template" "ecs_lt" {
     tags          = local.common_tags
 
   }
-  user_data = filebase64("${path.module}/register-ec2.sh")
+  user_data = base64encode("register-ec2.sh")
 }
