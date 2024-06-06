@@ -23,7 +23,7 @@ resource "aws_lb" "lb_ecs" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_security_group.id]
-  subnets = ["${data.terraform_remote_state.vpc.outputs.id_subnet[0]}", "${data.terraform_remote_state.vpc.outputs.id_subnet[1]}"]
+  subnets            = ["${data.terraform_remote_state.vpc.outputs.id_subnet[0]}", "${data.terraform_remote_state.vpc.outputs.id_subnet[1]}"]
 
   tags = local.common_tags
 }

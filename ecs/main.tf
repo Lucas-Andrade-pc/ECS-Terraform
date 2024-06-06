@@ -53,3 +53,12 @@ data "terraform_remote_state" "lb" {
     #profile = "aws-lucas"
   }
 }
+data "terraform_remote_state" "role" {
+  backend = "s3"
+  config = {
+    bucket = "descomplicando-terraform-remote-state"
+    key    = "role/terraform.tfstate"
+    region = "us-east-1"
+    #profile = "aws-lucas"
+  }
+}

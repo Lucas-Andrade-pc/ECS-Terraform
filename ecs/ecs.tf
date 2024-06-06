@@ -53,7 +53,7 @@ resource "aws_ecs_capacity_provider" "capacity_provider" {
       maximum_scaling_step_size = 1000
       minimum_scaling_step_size = 1
       status                    = "ENABLED"
-      target_capacity           = 3
+      target_capacity           = 1
     }
   }
 }
@@ -120,7 +120,7 @@ resource "aws_ecs_service" "ecs_service" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count   = 1
-  iam_role = aws_iam_role.ecs_service_role.arn
+  #iam_role = aws_iam_role.ecs_service_role.arn
 
   network_configuration {
     subnets         = ["${data.terraform_remote_state.vpc.outputs.id_subnet[1]}", "${data.terraform_remote_state.vpc.outputs.id_subnet[2]}"]

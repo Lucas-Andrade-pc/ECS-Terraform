@@ -11,7 +11,7 @@ terraform {
     key     = "role/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
-    profile = "aws-lucas"
+    # profile = "aws-lucas"
   }
 }
 
