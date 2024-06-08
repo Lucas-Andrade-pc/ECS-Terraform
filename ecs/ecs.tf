@@ -5,13 +5,13 @@ data "aws_iam_policy_document" "ecs_service_policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["ecs.amazonaws.com",]
+      identifiers = ["ecs.amazonaws.com", ]
     }
   }
 }
 data "aws_iam_policy_document" "ecs_service_role_policy" {
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     actions = [
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:Describe*",
@@ -89,10 +89,9 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  family       = "application-nginx"
-  network_mode = "awsvpc"
+  family             = "application-nginx"
+  network_mode       = "awsvpc"
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  cpu = 256
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
@@ -100,14 +99,14 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   container_definitions = jsonencode([
     {
       name      = "containernginx"
-      image     = "nginx:latest"
-      cpu       = 256
-      memory    = 512
+      image     = "nginx:alpine3.19"
+      cpu       = 156
+      memory    = 256
       essential = true
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = 80,
+          hostPort      = 80,
           protocol      = "tcp"
         }
       ]
@@ -144,7 +143,7 @@ resource "aws_ecs_service" "ecs_service" {
     type  = "spread"
     field = "attribute:ecs.availability-zone"
   }
-  
+
   ordered_placement_strategy {
     type  = "binpack"
     field = "memory"
